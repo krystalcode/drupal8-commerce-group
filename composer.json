@@ -1,0 +1,28 @@
+{
+    "name": "drupal/commerce_group",
+    "type": "drupal-module",
+    "description": "Provides functionality to integrate Commerce entities with the Group module.",
+    "keywords": ["Drupal"],
+    "homepage": "https://www.drupal.org/project/commerce_group",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "shabana.navas",
+            "homepage": "https://www.drupal.org/u/shabananavas",
+            "role": "Maintainer"
+        },
+        {
+            "name": "krystalcode",
+            "homepage": "https://www.drupal.org/u/krystalcode",
+            "role": "Co-maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/commerce_group",
+        "source": "https://git.drupalcode.org/project/commerce_group.git"
+    },
+    "require": {
+        "drupal/commerce": "~2.16",
+        "drupal/group": "^1.0"
+    }
+}
