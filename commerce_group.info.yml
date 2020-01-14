@@ -1,0 +1,8 @@
+name: Commerce Group
+type: module
+description: Provides functionality to integrate Commerce entities with the Group module.
+package: Commerce
+core: 8.x
+dependencies:
+  - commerce:order
+  - group:group
