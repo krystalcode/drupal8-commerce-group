@@ -1,0 +1,24 @@
+{
+  "name": "drupal/gcommerce",
+  "type": "drupal-module",
+  "description": "Provides integration between the Group and Commerce suite of modules.",
+  "keywords": ["Drupal"],
+  "homepage": "https://www.drupal.org/project/gcommerce",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "krystalcode",
+      "homepage": "https://www.drupal.org/u/krystalcode",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/gcommerce",
+    "source": "https://git.drupalcode.org/project/gcommerce"
+  },
+  "require": {
+    "drupal/core": "^8.8 | ^9",
+    "drupal/commerce": "^2.17",
+    "drupal/group": "^2.0@rc"
+  }
+}
