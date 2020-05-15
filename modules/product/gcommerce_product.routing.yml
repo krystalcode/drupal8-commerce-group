@@ -1,0 +1,2 @@
+route_callbacks:
+  - '\Drupal\gcommerce_product\Routing\GroupProductRouteProvider::getRoutes'
