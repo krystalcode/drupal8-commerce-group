@@ -1,0 +1,3 @@
+access group_commerce_product overview:
+  title: 'Access group product overview'
+  description: 'Access the overview of all group products, regardless of product type'
