@@ -11,6 +11,7 @@
  */
 
 use Drupal\commerce_product\Entity\ProductTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 
 /**
@@ -25,4 +26,55 @@ function gcommerce_product_commerce_product_type_insert(
 ) {
   \Drupal::service('plugin.manager.group_content_enabler')
     ->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_entity_operation().
+ *
+ * @I Display the Products operation only for groups with plugins installed
+ *    type     : bug
+ *    priority : normal
+ *    labels   : product
+ * @I Build operations in a service for OOP
+ *    type     : task
+ *    priority : normal
+ *    labels   : coding-standards, refactoring
+ * @I Move views machine name to a class
+ *    type     : task
+ *    priority : normal
+ *    labels   : coding-standards, refactoring
+ */
+function gcommerce_product_entity_operation(EntityInterface $group) {
+  if ($group->getEntityTypeId() !== 'group') {
+    return [];
+  }
+  if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    return [];
+  }
+
+  $has_permission = $group->hasPermission(
+    'access group_commerce_product overview',
+    \Drupal::currentUser()
+  );
+  if (!$has_permission) {
+    return [];
+  }
+
+  $route = \Drupal::service('router.no_access_checks')
+    ->getRouteCollection()
+    ->get('view.group_commerce_products.page_1');
+  if (!$route) {
+    return [];
+  }
+
+  return [
+    'commerce_product' => [
+      'title' => t('Products'),
+      'weight' => 20,
+      'url' => Url::fromRoute(
+        'view.group_commerce_products.page_1',
+        ['group' => $group->id()]
+      ),
+    ]
+  ];
 }
