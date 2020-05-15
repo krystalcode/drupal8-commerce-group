@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Hooks and functionality for the Group Commerce Product module.
+ *
+ * @I Implement group access control
+ *    type     : bug
+ *    priority : high
+ *    labels   : security
+ */
+
+use Drupal\commerce_product\Entity\ProductTypeInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * Clear the cached group content enabler plugin definitions when a new product
+ * type is created so that it can be recognized without having to rebuild
+ * caches.
+ */
+function gcommerce_product_commerce_product_type_insert(
+  ProductTypeInterface $product_type
+) {
+  \Drupal::service('plugin.manager.group_content_enabler')
+    ->clearCachedDefinitions();
+}
