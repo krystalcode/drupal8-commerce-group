@@ -11,6 +11,8 @@
  */
 
 use Drupal\commerce_order\Entity\OrderTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
@@ -24,4 +26,55 @@ function gcommerce_order_commerce_order_type_insert(
 ) {
   \Drupal::service('plugin.manager.group_content_enabler')
     ->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_entity_operation().
+ *
+ * @I Display the Orders operation only for groups with plugins installed
+ *    type     : bug
+ *    priority : normal
+ *    labels   : order
+ * @I Build operations in a service for OOP
+ *    type     : task
+ *    priority : normal
+ *    labels   : coding-standards, refactoring
+ * @I Move views machine name to a class
+ *    type     : task
+ *    priority : normal
+ *    labels   : coding-standards, refactoring
+ */
+function gcommerce_order_entity_operation(EntityInterface $group) {
+  if ($group->getEntityTypeId() !== 'group') {
+    return [];
+  }
+  if (!\Drupal::moduleHandler()->moduleExists('views')) {
+    return [];
+  }
+
+  $has_permission = $group->hasPermission(
+    'access group_commerce_order overview',
+    \Drupal::currentUser()
+  );
+  if (!$has_permission) {
+    return [];
+  }
+
+  $route = \Drupal::service('router.no_access_checks')
+    ->getRouteCollection()
+    ->get('view.group_commerce_orders.page_1');
+  if (!$route) {
+    return [];
+  }
+
+  return [
+    'commerce_order' => [
+      'title' => t('Orders'),
+      'weight' => 20,
+      'url' => Url::fromRoute(
+        'view.group_commerce_orders.page_1',
+        ['group' => $group->id()]
+      ),
+    ]
+  ];
 }
