@@ -96,7 +96,7 @@ class GroupProduct extends GroupContentEnablerBase {
    */
   public function calculateDependencies() {
     $dependencies = parent::calculateDependencies();
-    $dependencies['config'][] = 'commerce_product.type.' . $this->getEntityBundle();
+    $dependencies['config'][] = 'commerce_product.commerce_product_type.' . $this->getEntityBundle();
 
     return $dependencies;
   }

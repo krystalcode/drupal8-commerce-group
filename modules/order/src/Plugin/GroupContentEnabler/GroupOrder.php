@@ -100,7 +100,7 @@ class GroupOrder extends GroupContentEnablerBase {
    */
   public function calculateDependencies() {
     $dependencies = parent::calculateDependencies();
-    $dependencies['config'][] = 'commerce_order.type.' . $this->getEntityBundle();
+    $dependencies['config'][] = 'commerce_order.commerce_order_type.' . $this->getEntityBundle();
 
     return $dependencies;
   }
