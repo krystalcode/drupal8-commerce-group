@@ -81,6 +81,7 @@ display:
           summary: ''
           description: ''
           columns:
+            commerce_order_bulk_form: commerce_order_bulk_form
             order_number: order_number
             placed: placed
             type: type
@@ -89,8 +90,13 @@ display:
             mail: uid
             state: state
             total_price__number: total_price__number
-            operations: operations
+            group_entity_operations: group_entity_operations
           info:
+            commerce_order_bulk_form:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             order_number:
               sortable: true
               default_sort_order: asc
@@ -147,9 +153,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            operations:
-              sortable: false
-              default_sort_order: asc
+            group_entity_operations:
               align: ''
               separator: ''
               empty_column: false
@@ -199,7 +203,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -783,7 +787,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          destination: false
+          destination: true
           group_content: 1
           entity_type: commerce_order
           plugin_id: group_entity_operations
@@ -1014,7 +1018,7 @@ display:
       tab_options:
         type: normal
         title: Orders
-        description: "Manage your group's orders."
+        description: 'Manage your group''s orders.'
         weight: 0
     cache_metadata:
       max-age: -1
