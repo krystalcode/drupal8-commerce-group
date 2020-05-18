@@ -1,38 +1,42 @@
 <?php
 
-namespace Drupal\gcommerce_product\Plugin\GroupContentEnabler;
+namespace Drupal\gcommerce_order\Plugin\GroupContentEnabler;
 
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Plugin\GroupContentEnablerBase;
-use Drupal\commerce_product\Entity\ProductType;
+use Drupal\commerce_order\Entity\OrderType;
 
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Provides a content enabler for commerce products.
+ * Provides a content enabler for commerce orders.
  *
  * @GroupContentEnabler(
- *   id = "group_commerce_product",
- *   label = @Translation("Group product"),
- *   description = @Translation("Adds products to groups both publicly and privately."),
- *   entity_type_id = "commerce_product",
+ *   id = "group_commerce_order",
+ *   label = @Translation("Group order"),
+ *   description = @Translation("Adds orders to groups both publicly and privately."),
+ *   entity_type_id = "commerce_order",
  *   entity_access = TRUE,
  *   reference_label = @Translation("Title"),
- *   reference_description = @Translation("The title of the product to add to the group"),
- *   deriver = "Drupal\gcommerce_product\Plugin\GroupContentEnabler\GroupProductDeriver"
+ *   reference_description = @Translation("The title of the order to add to the group"),
+ *   deriver = "Drupal\gcommerce_order\Plugin\GroupContentEnabler\GroupOrderDeriver"
  * )
  *
- * @I Use dependency injection for loading product types and current user
+ * @I Use dependency injection for loading order types and current user
  *    type     : task
  *    priority : normal
- *    labels   : coding-standards, dependency-injection, product
- * @I Consider providing a plugin that permits all product bundles
+ *    labels   : coding-standards, dependency-injection, order
+ * @I Consider providing a plugin that permits all order bundles
  *    type     : feature
  *    priority : normal
- *    labels   : content-enabler, product
+ *    labels   : content-enabler, order
+ * @I Add a base content enabler plugin that can be reused for all entities
+ *    type     : task
+ *    priority : normal
+ *    labels   : content-enabler
  */
-class GroupProduct extends GroupContentEnablerBase {
+class GroupOrder extends GroupContentEnablerBase {
 
   /**
    * {@inheritdoc}
@@ -49,10 +53,10 @@ class GroupProduct extends GroupContentEnablerBase {
     $route_params = ['group' => $group->id(), 'plugin_id' => $plugin_id];
 
     return [
-      "gcommerce-product-create-$type" => [
+      "gcommerce-order-create-$type" => [
         'title' => $this->t(
           'Create @type',
-          ['@type' => $this->getProductType()->label()]
+          ['@type' => $this->getOrderType()->label()]
         ),
         'url' => new Url('entity.group_content.create_form', $route_params),
         'weight' => 30,
@@ -96,7 +100,7 @@ class GroupProduct extends GroupContentEnablerBase {
    */
   public function calculateDependencies() {
     $dependencies = parent::calculateDependencies();
-    $dependencies['config'][] = 'commerce_product.type.' . $this->getEntityBundle();
+    $dependencies['config'][] = 'commerce_order.type.' . $this->getEntityBundle();
 
     return $dependencies;
   }
@@ -118,13 +122,13 @@ class GroupProduct extends GroupContentEnablerBase {
   }
 
   /**
-   * Retrieves the product type this plugin supports.
+   * Retrieves the order type this plugin supports.
    *
-   * @return \Drupal\commerce_product\Entity\ProductTypeInterface
-   *   The product type this plugin supports.
+   * @return \Drupal\commerce_order\Entity\OrderTypeInterface
+   *   The order type this plugin supports.
    */
-  protected function getProductType() {
-    return ProductType::load($this->getEntityBundle());
+  protected function getOrderType() {
+    return OrderType::load($this->getEntityBundle());
   }
 
 }

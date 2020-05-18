@@ -1,0 +1,8 @@
+name: Group Commerce Order
+type: module
+description: Enables Group functionality for Commerce Order entities.
+package: Commerce (Contrib)
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - gcommerce:gcommerce
+  - commerce:commerce_order
