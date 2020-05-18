@@ -52,6 +52,12 @@ class GroupProductRouteProvider {
   /**
    * Builds the route for adding an existing product to a group.
    *
+   * @param array $plugin_ids
+   *   The array of installed plugins for the entity.
+   * @param array $permissions
+   *   The array containing the permissions to relate existing entities to the
+   *   group for the installed plugins.
+   *
    * @return \Symfony\Component\Routing\Route[]
    *   An array of routes keyed by route name.
    */
@@ -78,6 +84,12 @@ class GroupProductRouteProvider {
 
   /**
    * Builds the route for adding a new product to a group.
+   *
+   * @param array $plugin_ids
+   *   The array of installed plugins for the entity.
+   * @param array $permissions
+   *   The array containing the permissions to create new entities and relate
+   *   them to the group for the installed plugins.
    *
    * @return \Symfony\Component\Routing\Route[]
    *   An array of routes keyed by route name.

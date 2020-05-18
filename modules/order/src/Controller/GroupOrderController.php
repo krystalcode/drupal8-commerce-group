@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\gcommerce_product\Controller;
+namespace Drupal\gcommerce_order\Controller;
 
 use Drupal\group\Entity\Controller\GroupContentController;
 use Drupal\group\Entity\GroupInterface;
@@ -14,9 +14,14 @@ use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Returns responses for `group_commerce_product` GroupContent routes.
+ * Returns responses for `group_commerce_order` GroupContent routes.
+ *
+ * @I Add a base controller that can be reused for all entities
+ *    type     : task
+ *    priority : normal
+ *    labels   : controller, refactoring
  */
-class GroupProductController extends GroupContentController {
+class GroupOrderController extends GroupContentController {
 
   /**
    * The group content enabler plugin manager.
@@ -26,7 +31,7 @@ class GroupProductController extends GroupContentController {
   protected $pluginManager;
 
   /**
-   * Constructs a new GroupProductController object.
+   * Constructs a new GroupOrderController object.
    *
    * @param \Drupal\group\Plugin\GroupContentEnablerManagerInterface $plugin_manager
    *   The group content plugin manager.
@@ -71,6 +76,11 @@ class GroupProductController extends GroupContentController {
 
   /**
    * {@inheritdoc}
+   *
+   * @I Handle create mode for orders
+   *    type     : bug
+   *    priority : normal
+   *    labels   : order
    */
   public function addPage(GroupInterface $group, $create_mode = FALSE) {
     $build = parent::addPage($group, $create_mode);
@@ -82,7 +92,7 @@ class GroupProductController extends GroupContentController {
 
     // Overwrite the label and description for all of the displayed bundles.
     $storage_handler = $this->entityTypeManager
-      ->getStorage('commerce_product_type');
+      ->getStorage('commerce_order_type');
     $bundles = $this->addPageBundles($group, $create_mode);
     foreach ($bundles as $plugin_id => $bundle_name) {
       if (empty($build['#bundles'][$bundle_name])) {
@@ -98,16 +108,16 @@ class GroupProductController extends GroupContentController {
         ->label();
       $build['#bundles'][$bundle_name]['label'] = $bundle_label;
 
-      $t_args = ['%product_type' => $bundle_label];
+      $t_args = ['%order_type' => $bundle_label];
       if ($create_mode) {
         $build['#bundles'][$bundle_name]['description'] = $this->t(
-          'Create a product of type %product_type in the group.',
+          'Create a order of type %order_type in the group.',
           $t_args
         );
       }
       else {
         $build['#bundles'][$bundle_name]['description'] = $this->t(
-          'Add an existing product of type %product_type to the group.',
+          'Add an existing order of type %order_type to the group.',
           $t_args
         );
       }
@@ -122,10 +132,10 @@ class GroupProductController extends GroupContentController {
   protected function addPageBundles(GroupInterface $group, $create_mode) {
     $bundles = [];
 
-    // Retrieve all group_commerce_product plugins for the group's type.
+    // Retrieve all group_commerce_order plugins for the group's type.
     $plugin_ids = $this->pluginManager->getInstalledIds($group->getGroupType());
     foreach ($plugin_ids as $key => $plugin_id) {
-      if (strpos($plugin_id, 'group_commerce_product:') !== 0) {
+      if (strpos($plugin_id, 'group_commerce_order:') !== 0) {
         unset($plugin_ids[$key]);
       }
     }
