@@ -4,6 +4,7 @@ dependencies:
   module:
     - commerce
     - commerce_product
+    - gcommerce_product
     - group
 id: group_commerce_products
 label: 'Group products'
@@ -168,6 +169,59 @@ display:
           hide_empty: false
           default_field_elements: true
       fields:
+        commerce_product_bulk_form:
+          id: commerce_product_bulk_form
+          table: commerce_product
+          field: commerce_product_bulk_form
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Bulk update'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          action_title: 'With selection'
+          include_exclude: exclude
+          selected_actions: {  }
+          entity_type: commerce_product
+          plugin_id: bulk_form
         title:
           id: title
           table: commerce_product_field_data
@@ -240,7 +294,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Product type'
+          label: Type
           exclude: false
           alter:
             alter_text: false
@@ -698,10 +752,10 @@ display:
           output_url_as_text: false
           absolute: false
           plugin_id: entity_link_delete
-        dropbutton:
-          id: dropbutton
-          table: views
-          field: dropbutton
+        group_entity_operations:
+          id: group_entity_operations
+          table: commerce_product_field_data
+          field: group_entity_operations
           relationship: none
           group_type: group
           admin_label: ''
@@ -746,18 +800,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          fields:
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
-            delete_group_content: delete_group_content
-            edit_commerce_product: edit_commerce_product
-            delete_commerce_product: delete_commerce_product
-            title: '0'
-            type: '0'
-            status: '0'
-            changed: '0'
-          destination: true
-          plugin_id: dropbutton
+          destination: false
+          group_content: 1
+          entity_type: commerce_product
+          plugin_id: group_entity_operations
       filters:
         status:
           id: status
@@ -784,26 +830,20 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-          is_grouped: true
+              anonymous: '0'
+              administrator: '0'
+          is_grouped: false
           group_info:
-            label: 'Published status'
+            label: ''
             description: ''
-            identifier: status
+            identifier: ''
             optional: true
             widget: select
             multiple: false
             remember: false
             default_group: All
             default_group_multiple: {  }
-            group_items:
-              1:
-                title: Published
-                operator: '='
-                value: '1'
-              2:
-                title: Unpublished
-                operator: '='
-                value: '0'
+            group_items: {  }
           entity_type: commerce_product
           entity_field: status
           plugin_id: boolean
@@ -832,6 +872,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
             reduce: false
             hide_single_bundle: true
           is_grouped: false
@@ -849,6 +891,49 @@ display:
           entity_type: commerce_product
           entity_field: type
           plugin_id: commerce_entity_bundle
+        title:
+          id: title
+          table: commerce_product_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: word
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: title_op
+            label: Title
+            description: ''
+            use_operator: false
+            operator: title_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: title
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: commerce_product
+          entity_field: title
+          plugin_id: string
       sorts: {  }
       header: {  }
       footer: {  }
@@ -913,7 +998,7 @@ display:
           not: false
           entity_type: group_content
           entity_field: gid
-          plugin_id: numeric
+          plugin_id: group_id
       display_extenders: {  }
       title: Products
     cache_metadata:
