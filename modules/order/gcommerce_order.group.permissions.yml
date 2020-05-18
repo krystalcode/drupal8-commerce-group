@@ -1,0 +1,3 @@
+access group_commerce_order overview:
+  title: 'Access group order overview'
+  description: 'Access the overview of all group orders, regardless of order type'
