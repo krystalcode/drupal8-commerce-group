@@ -1,0 +1,5 @@
+services:
+  gcommerce_checkout.route_subscriber:
+    class: Drupal\gcommerce_checkout\EventSubscriber\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

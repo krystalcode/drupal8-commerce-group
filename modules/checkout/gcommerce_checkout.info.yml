@@ -1,0 +1,8 @@
+name: Group Commerce Checkout
+type: module
+description: Provides checkout-related functionality for orders that belong to groups.
+package: Commerce (Contrib)
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - gcommerce:gcommerce_order
+  - commerce:commerce_checkout
