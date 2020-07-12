@@ -20,7 +20,10 @@ use Drupal\Core\Form\FormStateInterface;
  *   entity_access = TRUE,
  *   reference_label = @Translation("Title"),
  *   reference_description = @Translation("The title of the order to add to the group"),
- *   deriver = "Drupal\gcommerce_order\Plugin\GroupContentEnabler\GroupOrderDeriver"
+ *   deriver = "Drupal\gcommerce_order\Plugin\GroupContentEnabler\GroupOrderDeriver",
+ *   handlers = {
+ *     "permission_provider" = "Drupal\gcommerce_order\GroupOrderPermissionProvider",
+ *   }
  * )
  *
  * @I Use dependency injection for loading order types and current user
@@ -103,22 +106,6 @@ class GroupOrder extends GroupContentEnablerBase {
     $dependencies['config'][] = 'commerce_order.commerce_order_type.' . $this->getEntityBundle();
 
     return $dependencies;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getTargetEntityPermissions() {
-    $permissions = parent::getTargetEntityPermissions();
-    $plugin_id = $this->getPluginId();
-
-    // Add a 'view unpublished' permission by re-using most of the 'view' one.
-    $original = $permissions["view $plugin_id entity"];
-    $permissions["view unpublished $plugin_id entity"] = [
-      'title' => str_replace('View ', 'View unpublished ', $original['title']),
-    ] + $original;
-
-    return $permissions;
   }
 
   /**
