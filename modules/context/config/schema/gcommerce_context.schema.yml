@@ -1,0 +1,21 @@
+gcommerce_context.settings:
+  type: config_object
+  label: 'Shopping context settings'
+  mapping:
+    status:
+      type: boolean
+      label: 'Whether shopping context functionality is enabled or not'
+    group_context:
+      type: mapping
+      label: 'Settings related to group shopping context'
+      mapping:
+        group_type:
+          type: string
+          label: 'The group type (bundle) of the shopping contexts'
+    personal_context:
+      type: mapping
+      label: 'Settings related to personal shopping context'
+      mapping:
+        status:
+          type: boolean
+          label: 'Whether personal shopping context is enabled or not'

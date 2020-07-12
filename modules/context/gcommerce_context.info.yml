@@ -1,0 +1,8 @@
+name: Group Commerce Context
+type: module
+description: Provides functionality for offering a context-based shopping experience.
+package: Commerce (Contrib)
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - gcommerce:gcommerce_order
+  - commerce:commerce_cart

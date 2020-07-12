@@ -1,0 +1,7 @@
+gcommerce_context.configuration:
+  path: '/admin/commerce/config/shopping-context'
+  defaults:
+    _form: '\Drupal\gcommerce_context\Form\Settings'
+    _title: 'Shopping context settings'
+  requirements:
+    _permission: 'access commerce administration pages'

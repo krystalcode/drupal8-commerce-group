@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Provides hooks and functionality for the Group Commerce Context module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gcommerce_context_help(
+  $route_name,
+  RouteMatchInterface $route_match
+) {
+  switch ($route_name) {
+    case 'gcommerce_context.configuration':
+      return '<p>' . t(
+        'The shopping context of an authenticated user is a Group that the user
+        is a member of. Examples are an organization or a purchase group. When a
+        shopping context is selected, adding products to a cart or placing an
+        order is interpreted as an action that is taken on behalf of the group.
+        For example, adding products to the cart will result in a cart that
+        belongs to the current group, and placing an order will result in an
+        order that belongs to the current group. If the user switches shopping
+        context (i.e. group) the carts and orders they will see will be the ones
+        belonging to the new group, and adding products to the cart or placing
+        orders will result in carts and orders belonging to the new group.'
+      ) . '</p>';
+  }
+}

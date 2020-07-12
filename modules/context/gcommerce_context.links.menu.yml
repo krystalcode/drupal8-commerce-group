@@ -1,0 +1,5 @@
+gcommerce_context.configuration:
+  title: 'Shopping context'
+  route_name: 'gcommerce_context.configuration'
+  parent: 'commerce.configuration'
+  weight: -5
