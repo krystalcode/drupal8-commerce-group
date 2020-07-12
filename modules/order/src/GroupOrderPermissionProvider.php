@@ -40,6 +40,10 @@ class GroupOrderPermissionProvider extends GroupContentPermissionProvider {
     $permissions = parent::buildPermissions();
 
     // Checkout permissions.
+    // @I Define checkout permissions only if `gcommerce_checkout` is enabled
+    //    type     : improvement
+    //    priority : low
+    //    labels   : permission
     $prefix = 'Entity:';
     $plugin_id = $this->pluginId;
     $permissions["checkout any $plugin_id entity"] = $this->buildPermission(
