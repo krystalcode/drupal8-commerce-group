@@ -5,6 +5,7 @@
  * Provides hooks and functionality for the Group Commerce Context module.
  */
 
+use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -29,4 +30,16 @@ function gcommerce_context_help(
         orders will result in carts and orders belonging to the new group.'
       ) . '</p>';
   }
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ *
+ * @see \Drupal\gcommerce_context\Hook\QueryAlter::commerceLoadDataAlter()
+ */
+function gcommerce_context_query_commerce_cart_load_data_alter(
+  AlterableInterface $query
+) {
+  \Drupal::service('gcommerce_context.hook.query_alter')
+    ->commerceCartLoadData($query);
 }

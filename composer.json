@@ -21,6 +21,9 @@
     "drupal/commerce": "^2.17",
     "drupal/group": "^1.0@rc"
   },
+  "suggest": {
+    "drupal/commerce_cart_advanced": "Provides advanced cart functionality and interface for Commerce 2. Required by the `drupal/gcommerce_context` submodule"
+  },
   "extra": {
     "patches": {
       "drupal/group": {

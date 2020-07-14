@@ -1,0 +1,15 @@
+services:
+  gcommerce_context.manager:
+    class: 'Drupal\gcommerce_context\Context\Manager'
+    arguments:
+      - '@current_user'
+      - '@entity_type.manager'
+      - '@group.membership_loader'
+      - '@tempstore.private'
+
+  gcommerce_context.hook.query_alter:
+    class: 'Drupal\gcommerce_context\Hook\QueryAlter'
+    arguments:
+      - '@gcommerce_context.manager'
+      - '@current_user'
+      - '@entity_type.manager'

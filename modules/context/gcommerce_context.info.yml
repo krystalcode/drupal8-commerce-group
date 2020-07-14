@@ -5,4 +5,11 @@ package: Commerce (Contrib)
 core_version_requirement: ^8.8 || ^9
 dependencies:
   - gcommerce:gcommerce_order
-  - commerce:commerce_cart
+  #  @I Force requiring `commerce_cart_advanced` beta4 version
+  #     type     : bug
+  #     priority : normal
+  #     labels   : context, dependencies
+  #     notes    : We don't want to add the module to composer dependencies as
+  #                it is not required if you don't have the `gcommerce_context`
+  #                module enabled. We can do that via `hook_requirements`.
+  - commerce_cart_advanced:commerce_cart_advanced
