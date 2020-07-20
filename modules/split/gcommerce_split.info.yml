@@ -1,0 +1,7 @@
+name: Group Commerce Split
+type: module
+description: Provides functionality for splitting order items between customers.
+package: Commerce (Contrib)
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - commerce:commerce_order

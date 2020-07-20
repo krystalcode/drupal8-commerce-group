@@ -22,7 +22,8 @@
     "drupal/group": "^1.0@rc"
   },
   "suggest": {
-    "drupal/commerce_cart_advanced": "Provides advanced cart functionality and interface for Commerce 2. Required by the `drupal/gcommerce_context` submodule"
+    "drupal/commerce_cart_advanced": "Provides advanced cart functionality and interface for Commerce 2. Required by the `drupal/gcommerce_context` submodule",
+    "drupal/physical": "Provides fields for physical measurements. Suggested by the `drupal/gcommerce_split` submodule"
   },
   "extra": {
     "patches": {
