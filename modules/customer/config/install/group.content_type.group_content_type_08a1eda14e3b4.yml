@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.gcommerce_customer
+  module:
+    - user
+id: group_content_type_08a1eda14e3b4
+label: 'Customer: Group membership'
+description: 'Adds users to groups as members.'
+group_type: gcommerce_customer
+content_plugin: group_membership
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

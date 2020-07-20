@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.gcommerce_customer
+id: gcommerce_customer-admin
+label: Admin
+weight: 100
+internal: false
+audience: member
+group_type: gcommerce_customer
+permissions_ui: true
+permissions:
+  - 'access content overview'
+  - 'access group_commerce_order overview'
+  - 'administer group'
+  - 'administer members'
+  - 'checkout any group_commerce_order:default entity'
+  - 'checkout own group_commerce_order:default entity'
+  - 'create group_commerce_order:default entity'
+  - 'edit group'
+  - 'leave group'
+  - 'update any group_commerce_order:default entity'
+  - 'update own group_commerce_order:default entity'
+  - 'update own group_membership content'
+  - 'view group'
+  - 'view group_commerce_order:default entity'
+  - 'view group_membership content'
+

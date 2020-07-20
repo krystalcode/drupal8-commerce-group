@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.gcommerce_customer
+id: gcommerce_customer-outsider
+label: Outsider
+weight: -101
+internal: true
+audience: outsider
+group_type: gcommerce_customer
+permissions_ui: true
+permissions:
+  - 'join group'
+  - 'view group'

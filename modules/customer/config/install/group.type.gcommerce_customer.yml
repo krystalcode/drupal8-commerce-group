@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: gcommerce_customer
+label: Customer
+description: 'A Customer group represents a group of customers that can place group orders together.'
+creator_membership: true
+creator_wizard: false
+creator_roles:
+  - gcommerce_customer-admin

@@ -1,0 +1,7 @@
+name: Group Commerce Customer
+type: module
+description: Provides a Customer group and functionality related to placing group orders.
+package: Commerce (Contrib)
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - gcommerce:gcommerce_order

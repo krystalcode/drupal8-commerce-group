@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.gcommerce_customer
+id: gcommerce_customer-member
+label: Member
+weight: -100
+internal: true
+audience: member
+group_type: gcommerce_customer
+permissions_ui: true
+permissions:
+  - 'access group_commerce_order overview'
+  - 'checkout any group_commerce_order:default entity'
+  - 'checkout own group_commerce_order:default entity'
+  - 'create group_commerce_order:default entity'
+  - 'leave group'
+  - 'update any group_commerce_order:default entity'
+  - 'update own group_commerce_order:default entity'
+  - 'update own group_membership content'
+  - 'view group'
+  - 'view group_commerce_order:default entity'
+  - 'view group_membership content'
+

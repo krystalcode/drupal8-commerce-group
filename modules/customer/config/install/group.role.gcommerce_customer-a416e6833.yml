@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.gcommerce_customer
+  enforced:
+    config:
+      - user.role.administrator
+id: gcommerce_customer-a416e6833
+label: Administrator
+weight: 2
+internal: true
+audience: outsider
+group_type: gcommerce_customer
+permissions_ui: false
+permissions: {  }
