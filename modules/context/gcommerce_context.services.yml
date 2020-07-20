@@ -10,6 +10,7 @@ services:
   gcommerce_context.hook.query_alter:
     class: 'Drupal\gcommerce_context\Hook\QueryAlter'
     arguments:
+      - '@config.factory'
       - '@gcommerce_context.manager'
       - '@current_user'
       - '@entity_type.manager'

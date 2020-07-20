@@ -3,7 +3,9 @@
 namespace Drupal\gcommerce_context\Hook;
 
 use Drupal\gcommerce_context\Context\ManagerInterface;
+use Drupal\gcommerce_context\Exception\InvalidConfigurationException;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -13,6 +15,13 @@ use Drupal\Core\Session\AccountProxyInterface;
  * Holds methods implementing hook_query_alter or hook_query_alter().
  */
 class QueryAlter {
+
+  /**
+   * The module's configuration.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
 
   /**
    * The shopping context manager.
@@ -38,6 +47,8 @@ class QueryAlter {
   /**
    * Constructs a new QueryAlter object.
    *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
    * @param \Drupal\gcommerce_context\Context\ManagerInterface $context_manager
    *   The shopping context manager.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
@@ -46,10 +57,12 @@ class QueryAlter {
    *   The entity type manager.
    */
   public function __construct(
+    ConfigFactoryInterface $config_factory,
     ManagerInterface $context_manager,
     AccountProxyInterface $current_user,
     EntityTypeManagerInterface $entity_type_manager
   ) {
+    $this->config = $config_factory->get('gcommerce_context.settings');
     $this->contextManager = $context_manager;
     $this->currentUser = $current_user->getAccount();
     $this->entityTypeManager = $entity_type_manager;
@@ -66,6 +79,9 @@ class QueryAlter {
    *   A Query object describing the composite parts of a SQL query.
    */
   public function commerceCartLoadData(AlterableInterface $query) {
+    if (!$this->config->get('status')) {
+      return;
+    }
     if (!$query instanceof SelectInterface) {
       return;
     }
@@ -108,16 +124,95 @@ class QueryAlter {
       'gcfdu',
       'gcfd.gid = gcfdu.gid'
     );
-    // @I Programmatically load the group content types
-    //    type     : bug
-    //    priority : high
-    //    labels   : context
-    //    notes    : Right now we use the group content types provided by the
-    //               `gcommerce_customer` module.
-    $query->condition('gcfd.type', 'group_content_type_740ce7f502d20');
-    $query->condition('gcfdu.type', 'group_content_type_08a1eda14e3b4');
+
+    [$order_plugin_ids, $user_plugin_ids] = $this->getPluginIds();
+    $query->condition('gcfd.type', $order_plugin_ids, 'IN');
+    $query->condition('gcfdu.type', $user_plugin_ids, 'IN');
     $query->condition('gcfd.gid', $context->id());
     $query->condition('gcfdu.entity_id', $this->currentUser->id());
+  }
+
+  /**
+   * Loads the plugin IDs for order and user memberships.
+   *
+   * We only load plugin IDs that define group content types for the group type
+   * configured to act as the context. Also, we assume the default user
+   * membership plugin and the order membership plugin provided by
+   * `gcommerce_order`. It is extremely rare to have other plugins for the same
+   * entities (`user`, `commerce_order`), and if there are they would most
+   * likely serve a different purpose, so it's not worth making things more
+   * complicated.
+   *
+   * @return array
+   *   An array containing the order membership plugin IDs as its first element,
+   *   and the user membership plugin IDs as its second element.
+   */
+  protected function getPluginIds() {
+    $group_type_id = $this->config->get('group_context.group_type');
+    $group_content_types = $this->entityTypeManager
+      ->getStorage('group_content_type')
+      ->loadByProperties(
+        ['group_type' => $group_type_id]
+      );
+
+    $order_plugin_ids = [];
+    $user_plugin_ids = [];
+    foreach ($group_content_types as $group_content_type) {
+      $plugin_id = $group_content_type->getContentPluginId();
+      if ($plugin_id === 'group_membership') {
+        $user_plugin_ids[] = $group_content_type->id();
+        continue;
+      }
+
+      if (strpos($plugin_id, 'group_commerce_order:') === 0) {
+        $order_plugin_ids[] = $group_content_type->id();
+      }
+    }
+
+    $this->validatePluginIds(
+      $order_plugin_ids,
+      $user_plugin_ids,
+      $group_type_id
+    );
+
+    return [$order_plugin_ids, $user_plugin_ids];
+  }
+
+  /**
+   * Validates that plugins are installed for orders/users for the group type.
+   *
+   * @param string[] $order_plugin_ids
+   *   The plugin IDs for orders.
+   * @param string[] $user_plugin_ids
+   *   The plugin IDs for users.
+   * @param string $group_type_id
+   *   The ID of the group type that acts as the context.
+   *
+   * @throws \Drupal\gcommerce\Exception\InvalidConfigurationException
+   *   When there are no plugins installed for making orders or users available
+   *   as group content to the group type with the given ID.
+   */
+  protected function validatePluginIds(
+    array $order_plugin_ids,
+    array $user_plugin_ids,
+    $group_type_id
+  ) {
+    if (!$order_plugin_ids) {
+      throw new InvalidConfigurationException(
+        sprintf(
+          'No order types are configured to be available as group content for the `%s` group type.',
+          $group_type_id
+        )
+      );
+    }
+    if (!$user_plugin_ids) {
+      throw new InvalidConfigurationException(
+        sprintf(
+          'Users are not configured to be available as group content for the `%s` group type.',
+          $group_type_id
+        )
+      );
+    }
   }
 
 }
