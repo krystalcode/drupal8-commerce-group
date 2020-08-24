@@ -5,6 +5,7 @@ namespace Drupal\gcommerce_split\Entity;
 use Drupal\user\EntityOwnerTrait;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -20,6 +21,10 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     singular = "@count order split item",
  *     plural = "@count order split items",
  *   ),
+ *   handlers = {
+ *     "access" = "Drupal\gcommerce_split\Entity\Access\SplitItemAccessControlHandler",
+ *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
+ *   },
  *   base_table = "gcommerce_split_item",
  *   admin_permission = "administer commerce_order",
  *   entity_keys = {

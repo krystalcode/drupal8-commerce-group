@@ -4,4 +4,4 @@ description: Provides functionality for splitting order items between customers.
 package: Commerce (Contrib)
 core_version_requirement: ^8.8 || ^9
 dependencies:
-  - commerce:commerce_order
+  - commerce_cart_advanced:commerce_cart_advanced
