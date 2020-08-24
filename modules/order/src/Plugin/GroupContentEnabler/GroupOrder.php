@@ -3,6 +3,7 @@
 namespace Drupal\gcommerce_order\Plugin\GroupContentEnabler;
 
 use Drupal\group\Entity\GroupInterface;
+use Drupal\group\Entity\GroupContentInterface;
 use Drupal\group\Plugin\GroupContentEnablerBase;
 use Drupal\commerce_order\Entity\OrderType;
 
@@ -106,6 +107,16 @@ class GroupOrder extends GroupContentEnablerBase {
     $dependencies['config'][] = 'commerce_order.commerce_order_type.' . $this->getEntityBundle();
 
     return $dependencies;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getContentLabel(GroupContentInterface $group_content) {
+    // If the order does not have a number yet (i.e. carts), use its ID as the
+    // group content's label.
+    $order = $group_content->getEntity();
+    return $order->label() ?? $order->id();
   }
 
   /**
