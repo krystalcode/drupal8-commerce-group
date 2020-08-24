@@ -7,10 +7,19 @@ services:
       - '@group.membership_loader'
       - '@tempstore.private'
 
+  # Hooks.
+  # Implemented as services for OOP.
   gcommerce_context.hook.query_alter:
     class: 'Drupal\gcommerce_context\Hook\QueryAlter'
     arguments:
       - '@config.factory'
+      - '@gcommerce_context.manager'
+      - '@current_user'
+      - '@entity_type.manager'
+
+  gcommerce_context.hook.entity_save:
+    class: 'Drupal\gcommerce_context\Hook\EntitySave'
+    arguments:
       - '@gcommerce_context.manager'
       - '@current_user'
       - '@entity_type.manager'

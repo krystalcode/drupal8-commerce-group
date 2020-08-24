@@ -5,6 +5,7 @@
  * Provides hooks and functionality for the Group Commerce Context module.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
@@ -42,4 +43,14 @@ function gcommerce_context_query_commerce_cart_load_data_alter(
 ) {
   \Drupal::service('gcommerce_context.hook.query_alter')
     ->commerceCartLoadData($query);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * @see \Drupal\gcommerce_context\Hook\EntitySave::commerceOrderInsert()
+ */
+function gcommerce_commerce_order_insert(EntityInterface $entity) {
+  \Drupal::service('gcommerce_context.hook.entity_save')
+    ->commerceOrderInsert($entity);
 }
