@@ -22,3 +22,11 @@ function gcommerce_split_commerce_order_item_update(EntityInterface $entity) {
   \Drupal::service('gcommerce_split.hook.entity_save')
     ->commerceOrderItemPostSave($entity);
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function gcommerce_split_commerce_order_item_delete(EntityInterface $entity) {
+  \Drupal::service('gcommerce_split.hook.entity_delete')
+    ->commerceOrderItemPostDelete($entity);
+}

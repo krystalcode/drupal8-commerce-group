@@ -2,3 +2,7 @@ services:
   gcommerce_split.hook.entity_save:
     class: 'Drupal\gcommerce_split\Hook\EntitySave'
 
+  gcommerce_split.hook.entity_delete:
+    class: 'Drupal\gcommerce_split\Hook\EntityDelete'
+    arguments:
+      - '@entity_type.manager'
