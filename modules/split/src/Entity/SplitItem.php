@@ -66,7 +66,7 @@ class SplitItem extends ContentEntityBase implements SplitItemInterface {
    */
   public function setQuantity($quantity) {
     $this->set('quantity', (string) $quantity);
-    $this->recalculateTotalPrice();
+    $this->recalculatePrice();
     return $this;
   }
 
@@ -74,8 +74,8 @@ class SplitItem extends ContentEntityBase implements SplitItemInterface {
    * {@inheritdoc}
    */
   public function getPrice() {
-    if (!$this->get('total_price')->isEmpty()) {
-      return $this->get('total_price')->first()->toPrice();
+    if (!$this->get('price')->isEmpty()) {
+      return $this->get('price')->first()->toPrice();
     }
   }
 
@@ -92,6 +92,35 @@ class SplitItem extends ContentEntityBase implements SplitItemInterface {
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+    $this->recalculatePrice();
+  }
+
+  /**
+   * Recalculates the split item's price.
+   *
+   * Until we implement the split unit field on the purchasable entity we just
+   * multiple the quantity with the unit price.
+   */
+  protected function recalculatePrice() {
+    $order_item = $this->getOrderItem();
+    if (!$order_item) {
+      return;
+    }
+
+    $unit_price = $order_item->getUnitPrice();
+    if (!$unit_price) {
+      return;
+    }
+
+    $this->price = \Drupal::service('commerce_price.rounder')
+      ->round($unit_price->multiply($this->getQuantity()));
   }
 
   /**
