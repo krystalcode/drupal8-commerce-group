@@ -30,3 +30,14 @@ function gcommerce_split_commerce_order_item_delete(EntityInterface $entity) {
   \Drupal::service('gcommerce_split.hook.entity_delete')
     ->commerceOrderItemPostDelete($entity);
 }
+
+/**
+ * Implements hook_inline_entity_form_table_fields_alter().
+ */
+function gcommerce_split_inline_entity_form_table_fields_alter(
+  &$fields,
+  $context
+) {
+  \Drupal::service('gcommerce_split.hook.inline_entity_form')
+    ->tableFieldsAlter($fields, $context);
+}

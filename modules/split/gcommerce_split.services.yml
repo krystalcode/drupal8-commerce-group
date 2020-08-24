@@ -1,4 +1,6 @@
 services:
+  # Hooks.
+  # Implemented as services for OOP.
   gcommerce_split.hook.entity_save:
     class: 'Drupal\gcommerce_split\Hook\EntitySave'
 
@@ -6,3 +8,6 @@ services:
     class: 'Drupal\gcommerce_split\Hook\EntityDelete'
     arguments:
       - '@entity_type.manager'
+
+  gcommerce_split.hook.inline_entity_form:
+    class: 'Drupal\gcommerce_split\Hook\InlineEntityForm'
