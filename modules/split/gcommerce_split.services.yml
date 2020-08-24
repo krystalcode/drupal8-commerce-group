@@ -1,0 +1,4 @@
+services:
+  gcommerce_split.hook.entity_save:
+    class: 'Drupal\gcommerce_split\Hook\EntitySave'
+

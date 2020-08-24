@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Provides hooks and functionality for the Group Commerce Split module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function gcommerce_split_commerce_order_item_insert(EntityInterface $entity) {
+  \Drupal::service('gcommerce_split.hook.entity_save')
+    ->commerceOrderItemPostSave($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function gcommerce_split_commerce_order_item_update(EntityInterface $entity) {
+  \Drupal::service('gcommerce_split.hook.entity_save')
+    ->commerceOrderItemPostSave($entity);
+}
