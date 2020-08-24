@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.gcommerce_context_default
+  module:
+    - gcommerce_context
+    - user
+id: user.user.gcommerce_context_default
+field_name: gcommerce_context_default
+entity_type: user
+bundle: user
+label: 'Default shopping context'
+description: ''
+required: false
+translatable: false
+default_value_callback: ''
+settings:
+  handler: 'gcommerce:context'
+  handler_settings:
+    sort:
+      field: _none
+field_type: gcommerce_context_reference

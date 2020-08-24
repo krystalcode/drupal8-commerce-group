@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.gcommerce_context_remember
+  module:
+    - user
+id: user.user.gcommerce_context_remember
+field_name: gcommerce_context_remember
+entity_type: user
+bundle: user
+label: 'Remember shopping context'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

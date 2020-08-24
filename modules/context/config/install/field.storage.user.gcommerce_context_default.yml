@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - gcommerce_context
+    - group
+    - user
+id: user.gcommerce_context_default
+field_name: gcommerce_context_default
+entity_type: user
+type: gcommerce_context_reference
+settings:
+  target_type: group
+module: gcommerce_context
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
