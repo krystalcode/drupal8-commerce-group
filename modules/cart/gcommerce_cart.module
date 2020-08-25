@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Provides hooks and functionality for the Group Commerce Cart module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_commerce_cart_access().
+ *
+ * @see \Drupal\commerce_cart_advanced\Access\CartAccessControlHandler
+ */
+function gcommerce_commerce_cart_access(
+  EntityInterface $entity,
+  $operation,
+  AccountInterface $account
+) {
+  return \Drupal::service('gcommerce_cart.hook.entity_access')
+    ->commerceCartAccess($entity, $operation, $account);
+}

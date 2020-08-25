@@ -39,6 +39,26 @@ class GroupOrderPermissionProvider extends GroupContentPermissionProvider {
   public function buildPermissions() {
     $permissions = parent::buildPermissions();
 
+    // Cart permissions.
+    // @I Define cart permissions only if `gcommerce_cart` is enabled
+    //    type     : improvement
+    //    priority : low
+    //    labels   : permission
+    $prefix = 'Entity:';
+    $plugin_id = $this->pluginId;
+    $permissions["view any $plugin_id cart"] = $this->buildPermission(
+      "$prefix View any %entity_type carts"
+    );
+    $permissions["view own $plugin_id cart"] = $this->buildPermission(
+      "$prefix View own %entity_type carts"
+    );
+    $permissions["update any $plugin_id cart"] = $this->buildPermission(
+      "$prefix Update any %entity_type carts"
+    );
+    $permissions["update own $plugin_id cart"] = $this->buildPermission(
+      "$prefix Update own %entity_type carts"
+    );
+
     // Checkout permissions.
     // @I Define checkout permissions only if `gcommerce_checkout` is enabled
     //    type     : improvement

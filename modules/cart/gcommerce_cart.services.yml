@@ -1,0 +1,7 @@
+services:
+  # Hooks.
+  # Implemented as services for OOP.
+  gcommerce_cart.hook.entity_access:
+    class: 'Drupal\gcommerce_cart\Hook\EntityAccess'
+    arguments:
+      - '@entity_type.manager'
