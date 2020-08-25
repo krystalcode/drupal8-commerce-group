@@ -53,7 +53,7 @@ class SplitItemAccessControlHandler extends EntityAccessControlHandler {
     // order so we don't need to add that in the cacheable dependencies.
     $result = parent::checkAccess($split_item, $operation, $account, TRUE);
     if (!$result->isAllowed()) {
-      return $result->addCacheableDependency($entity);
+      return $result->addCacheableDependency($split_item);
     }
 
     // The only operations relevant to cart orders are `view`, `update` and
@@ -62,7 +62,7 @@ class SplitItemAccessControlHandler extends EntityAccessControlHandler {
     // corresponding order permissions; we therefore cannot be sure how to
     // handle them. They would need to be handled by the provider.
     if (!in_array($operation, ['view', 'update', 'delete'])) {
-      return $result->addCacheableDependency($entity);
+      return $result->addCacheableDependency($split_item);
     }
 
     $order = $split_item->getOrderItem()->getOrder();
